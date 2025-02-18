@@ -1,0 +1,22 @@
+[project]
+name = "aporiapy"
+version = "0.1.0"
+description = "A compiler which translates a subset of Python to the Aporia language"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Ephraim Siegfried", email = "ephraim.siegfried@hotmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "aporia-interpreter>=0.1.2",
+]
+
+[project.scripts]
+aporiapy = "aporiapy.main:cli"
+
+[build-system]
+requires = ["setuptools", "wheel", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# https://github.com/astral-sh/uv/issues/9513
+license-files = []
