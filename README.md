@@ -21,7 +21,7 @@ pip install aporiapy
 You can use the compiler via the command line interface
 
 ```bash
-aporiapy file_to_be_executed.py
+aporiapy file_to_be_compiled.py
 ```
 This will generate an spp file containing the Aporia source code. Additional options can be found with `aporiapy -h`
 
