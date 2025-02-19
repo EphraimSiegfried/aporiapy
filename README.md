@@ -30,3 +30,7 @@ This will generate an spp file containing the Aporia source code. Additional opt
 
 Dependency management and the publishing of packages is managed by [uv](https://github.com/astral-sh/uv).
 You can install it with `pip install uv`. The interpreter can be run with `uv run aporiapy`
+
+## Acknowledgements
+
+This project builds upon the work done in the seminar Interpretation and Compilation of Programming Languages at the University of Basel. Thanks to the contributions of Ruben Hutter, Luca Gloor, and Ephraim Siegfried, as well as the guidance from the seminar instructors Ali Ajorian and Erick Lavoie.
