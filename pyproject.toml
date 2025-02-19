@@ -20,3 +20,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 # https://github.com/astral-sh/uv/issues/9513
 license-files = []
+
+[dependency-groups]
+dev = [
+    "aporia-interpreter>=0.1.2",
+    "pytest>=8.3.4",
+]
