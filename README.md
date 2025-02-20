@@ -29,7 +29,7 @@ This will generate an spp file containing the Aporia source code. Additional opt
 ## Contributing
 
 Dependency management and the publishing of packages is managed by [uv](https://github.com/astral-sh/uv).
-You can install it with `pip install uv`. The interpreter can be run with `uv run aporiapy`
+You can install it with `pip install uv`. The interpreter can be run with `uv run aporiapy`. Tests can be run with `uv run pytest`
 
 ## Acknowledgements
 
