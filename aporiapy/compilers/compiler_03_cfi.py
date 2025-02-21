@@ -110,6 +110,8 @@ class CompilerCfi:
                 return lcfi_ast.Add()
             case ast.Sub():
                 return lcfi_ast.Sub()
+            case ast.Mod():
+                return lcfi_ast.Mod()
             case ast.USub():
                 return lcfi_ast.USub()
             case ast.And():
