@@ -59,9 +59,7 @@ def cli():
     if args.stdout:
         print(compiled_source)
     else:
-        output_path = Path(args.output)
-        if args.output is None:
-            output_path = input_path.with_suffix(".spp")
+        output_path = Path(args.output) if args.output else input_path.with_suffix(".spp")
         with open(output_path, "w") as output_file:
             output_file.write(compiled_source)
         print(f"Compiled file written to: {output_path}")
