@@ -49,8 +49,15 @@ class CompilerCfi:
 
     def select_instruction(self, stmt, int_vars, bool_vars, float_vars) -> Inst:
         match stmt:
-            case ast.Expr(Call(Name('print'), [exp])):
-                return PrintInst("", self.select_exp(exp))
+            case ast.Expr(ast.Call(ast.Name('print'), args)):
+                if isinstance(string := getattr(args[0], 'value', None), str):
+                    expression = None
+                    if len(args) > 1:
+                        expression = self.select_exp((args[1]))
+                        string += " "
+                    return PrintInst(string, expression)
+                else:
+                    return PrintInst("", self.select_exp(args[0]))
             case ast.Assign([Name(var)], exp):
                 self.check_type(var, exp, int_vars, bool_vars, float_vars)
                 return AssignInst(lcfi_ast.Assign(Var(var), self.select_exp(exp)))
