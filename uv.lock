@@ -4,14 +4,14 @@ requires-python = ">=3.10"
 
 [[package]]
 name = "aporia-interpreter"
-version = "0.1.2"
+version = "0.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "lark" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/28/cc1d435dea847ac5e2f3349f3b5c5c2f62dff638fe8efeaf553bef469f53/aporia_interpreter-0.1.2.tar.gz", hash = "sha256:952cbb2eb706f3c9f3fcc37a76dc77090ffb47d948b10cc6078ff686075f9774", size = 180288 }
+sdist = { url = "https://files.pythonhosted.org/packages/65/39/0af40ad49e2c855b42b09a33a93bc8d9caf59fdf5fa389733a88a8b926d6/aporia_interpreter-0.1.6.tar.gz", hash = "sha256:a1cdb8996533053183ae863eaacc097c21276e24496d38091d9b14b93e2600d4", size = 181010 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a4/06/203c6e3e1a35f122800fb0a98b18a494aadadb3581f09de7741cb45158a4/aporia_interpreter-0.1.2-py3-none-any.whl", hash = "sha256:082fc64503afffb8ca39879672fb39e97b65d89c306a7f6a124e6a6598bf9604", size = 9424 },
+    { url = "https://files.pythonhosted.org/packages/31/14/d99c69c8a098efb67ba4afa40c9ce9746f1c19d03a1acd1ca338e86efafd/aporia_interpreter-0.1.6-py3-none-any.whl", hash = "sha256:51ad435d662e9ce984084692e56dbada0a47145c95b086142b0812effe7df42d", size = 9607 },
 ]
 
 [[package]]

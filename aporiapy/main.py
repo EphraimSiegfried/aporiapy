@@ -10,32 +10,16 @@ from aporiapy.compilers.compiler_03_cfi import CompilerCfi
 compilers = [CompilerSc(), CompilerFlat(), CompilerCfi()]
 
 
-def compile_source(input_path, output_to_stdout, output_path):
-    """Compile the source file and handle output based on the mode."""
+def compile_source(input_path):
     with open(input_path, "r") as file:
         original_source = file.read()
-
     program_ast = ast.parse(original_source)
-
-    compiled_source = original_source
     for compiler in compilers:
-        compiled_ast = compiler.compile(program_ast)
-        if isinstance(compiled_ast, ast.Module):
-            ast.fix_missing_locations(compiled_ast)
-            compiled_source = ast.unparse(compiled_ast)
-        else:
-            compiled_source = str(compiled_ast)
+        program_ast = compiler.compile(program_ast)
+        if isinstance(program_ast, ast.Module):
+            ast.fix_missing_locations(program_ast)
+    return program_ast
 
-        program_ast = compiled_ast
-
-    if output_to_stdout:
-        print(compiled_source)
-    else:
-        if output_path is None:
-            output_path = input_path.with_suffix(".spp")
-        with open(output_path, "w") as output_file:
-            output_file.write(compiled_source)
-        print(f"Compiled file written to: {output_path}")
 
 def cli():
     parser = argparse.ArgumentParser(description="Compiles Python code to Aporia code")
@@ -52,6 +36,10 @@ def cli():
         "--stdout", action="store_true", help="Output the compiled code to stdout instead of a file."
     )
 
+    parser.add_argument(
+        "--ast", action="store_true", help="Print the ast of the compiled code."
+    )
+
     args = parser.parse_args()
 
     input_path = Path(args.input_file)
@@ -60,7 +48,21 @@ def cli():
         sys.stderr.write(f"Error: Input file '{input_path}' does not exist.\n")
         sys.exit(1)
 
-    compile_source(input_path, args.stdout, args.output)
+    compiled_ast = compile_source(input_path)
+    compiled_source = str(compiled_ast)
+
+
+    if args.ast:
+        print(f"{"*" * 8} AST BEGIN {"*" * 8}")
+        print(compiled_ast.pretty())
+        print(f"{"*" * 8} AST END {"*" * 8}")
+    if args.stdout:
+        print(compiled_source)
+    else:
+        output_path = Path(args.output) if args.output else input_path.with_suffix(".spp")
+        with open(output_path, "w") as output_file:
+            output_file.write(compiled_source)
+        print(f"Compiled file written to: {output_path}")
 
 if __name__ == "__main__":
     cli()

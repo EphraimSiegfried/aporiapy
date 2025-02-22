@@ -1,6 +1,2 @@
-x = 10
-if x + 5 > 12:
-    print(x + 5)
-else:
-    print(x - 5)
-
+x = (3  + 3) - (1 + 2)
+print(x)

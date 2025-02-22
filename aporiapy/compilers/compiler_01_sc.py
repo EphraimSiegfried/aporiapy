@@ -29,10 +29,19 @@ class CompilerSc:
                 new_stmts.append(If(new_test, new_body, []))
                 new_stmts.append(If(neg_test, new_orelse, []))
                 return new_stmts
-            case Expr(Call(Name("print"), [exp])):
+            case Expr(Call(Name("print"), args)):
+                new_args = []
+                if len(args) == 2:
+                    string, exp = args
+                    new_args.append(string)
+                elif len(args) == 1:
+                    exp = args[0]
+                else:
+                    raise Exception(f"Unexpected number of arguments in print statement: {args}")
                 exp, temps = self.rco_expression(exp, False)
+                new_args.append(exp)
                 new_stmts.extend(temps)
-                new_stmts.append(Expr(Call(Name("print"), [exp], keywords=[])))
+                new_stmts.append(Expr(Call(Name("print"), new_args, keywords=[])))
                 return new_stmts
             case Expr():
                 return []

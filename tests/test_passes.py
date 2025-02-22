@@ -43,5 +43,5 @@ def test_compiler(test_file):
             output_compiled = execute_and_capture(compiled_source)
         else:
             output_compiled = interpreter.InterpLcfi().interp(program_ast)
-        assert output_original == output_compiled, f"FAIL ({test_file.name}, {compiler.__class__.__name__}): expected {output_original} but got {output_compiled}"
+        assert output_compiled == output_original, f"FAIL ({test_file.name}, {compiler.__class__.__name__}): expected {output_original} but got {output_compiled}"
 
