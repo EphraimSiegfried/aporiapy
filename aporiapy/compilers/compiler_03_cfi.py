@@ -1,5 +1,6 @@
 import ast
 from ast import *
+
 import aporia.aporia_ast as lcfi_ast
 from aporia.aporia_ast import *
 
@@ -49,8 +50,8 @@ class CompilerCfi:
 
     def select_instruction(self, stmt, int_vars, bool_vars, float_vars) -> Inst:
         match stmt:
-            case ast.Expr(ast.Call(ast.Name('print'), args)):
-                if isinstance(string := getattr(args[0], 'value', None), str):
+            case ast.Expr(ast.Call(ast.Name("print"), args)):
+                if isinstance(string := getattr(args[0], "value", None), str):
                     expression = None
                     if len(args) > 1:
                         expression = self.select_exp((args[1]))
@@ -81,8 +82,13 @@ class CompilerCfi:
                 else:
                     raise Exception(f"Variable {var} not declared")
             case ast.BinOp(left, op, right):
-                self.check_type(new_var, left, int_vars, bool_vars, float_vars)
-                self.check_type(new_var, right, int_vars, bool_vars, float_vars)
+                if isinstance(op, ast.Div):
+                    float_vars.add(new_var)
+                    if new_var in int_vars:
+                        int_vars.remove(new_var)
+                else:
+                    self.check_type(new_var, left, int_vars, bool_vars, float_vars)
+                    self.check_type(new_var, right, int_vars, bool_vars, float_vars)
             case ast.BoolOp():
                 bool_vars.add(new_var)
             case ast.UnaryOp(ast.USub(), exp):
@@ -111,7 +117,11 @@ class CompilerCfi:
             case ast.Name(var):
                 return Var(var)
             case ast.Constant(value):
-                return lcfi_ast.Bools(value) if isinstance(value,bool) else lcfi_ast.Constant(value)
+                return (
+                    lcfi_ast.Bools(value)
+                    if isinstance(value, bool)
+                    else lcfi_ast.Constant(value)
+                )
             case ast.BinOp(left, op, right):
                 op = self.select_op(op)
                 return lcfi_ast.BinOp(self.select_exp(left), op, self.select_exp(right))
@@ -123,7 +133,9 @@ class CompilerCfi:
                 return lcfi_ast.BinOp(self.select_exp(left), op, self.select_exp(right))
             case ast.Compare(left, [cmp], [right]):
                 cmp = self.select_cmp(cmp)
-                return lcfi_ast.BinOp(self.select_exp(left), cmp, self.select_exp(right))
+                return lcfi_ast.BinOp(
+                    self.select_exp(left), cmp, self.select_exp(right)
+                )
             case _:
                 raise Exception(f"Unexpected expression in select_exp: {exp}")
 
@@ -139,6 +151,8 @@ class CompilerCfi:
                 return lcfi_ast.Mod()
             case ast.USub():
                 return lcfi_ast.USub()
+            case ast.Div():
+                return lcfi_ast.Div()
             case ast.And():
                 return lcfi_ast.And()
             case ast.Or():
@@ -164,4 +178,3 @@ class CompilerCfi:
                 return lcfi_ast.Ge()
             case _:
                 raise Exception(f"Unexpected comparator in select_cmp: {cmp}")
-
