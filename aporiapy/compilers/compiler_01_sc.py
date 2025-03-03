@@ -22,12 +22,13 @@ class CompilerSc:
             case If(test, body, orelse):
                 new_test, temp = self.rco_expression(test, True)
                 new_stmts.extend(temp)
-                neg_test = Name(generate_name())
-                new_stmts.append(Assign([neg_test], UnaryOp(Not(), new_test)))
                 new_body = self.rco_statements(body)
-                new_orelse = self.rco_statements(orelse)
                 new_stmts.append(If(new_test, new_body, []))
-                new_stmts.append(If(neg_test, new_orelse, []))
+                if orelse:
+                    neg_test = Name(generate_name())
+                    new_stmts.append(Assign([neg_test], UnaryOp(Not(), new_test)))
+                    new_orelse = self.rco_statements(orelse)
+                    new_stmts.append(If(neg_test, new_orelse, []))
                 return new_stmts
             case Expr(Call(Name("print"), args)):
                 new_args = []
