@@ -190,6 +190,8 @@ class CompilerCfi:
                 return lcfi_ast.Or()
             case ast.Not():
                 return lcfi_ast.Not()
+            case ast.FloorDiv():
+                return lcfi_ast.FloorDiv()
             case _:
                 raise Exception(f"Unexpected operator in select_op: {op}")
 
