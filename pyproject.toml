@@ -1,6 +1,6 @@
 [project]
 name = "aporiapy"
-version = "0.1.0"
+version = "0.1.2"
 description = "A compiler which translates a subset of Python to the Aporia language"
 readme = "README.md"
 license = { file = "LICENSE" }
