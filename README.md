@@ -1,4 +1,4 @@
-# Aporia AST
+# Aporiapy
 
 This package compiles a subset of Python to [Aporia](https://github.com/EphraimSiegfried/aporia). The Aporia language is described in [this paper](https://www.arxiv.org/abs/2411.05570).
 
